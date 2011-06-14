@@ -7,7 +7,7 @@ one:
   quality: 1
   commitment: 1
   office_procedures: 1
-  comment: MyString
+  notes: MyString
 two:
   id: 2
   sneak_poll: 
@@ -16,4 +16,4 @@ two:
   quality: 1
   commitment: 1
   office_procedures: 1
-  comment: MyString
+  notes: MyString

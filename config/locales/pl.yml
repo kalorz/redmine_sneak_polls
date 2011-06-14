@@ -13,7 +13,6 @@ pl:
   label_sneak_poll_versions: 'Przypisane Milestony:'
   label_sneak_poll_not_applicable: Nie dotyczy
   label_sneak_poll_not_applicable_abbr: N/D
-  label_sneak_poll_vote_comment_add: dodaj komentarz...
   label_sneak_poll_not_allowed_to_vote: Nie możesz głosować w tej ankiecie.
   label_sneak_poll_average: Średnia ogółem
   label_sneak_poll_average_average: Średnia średnich
@@ -42,7 +41,7 @@ pl:
   field_quality: Jakość pracy
   field_commitment: Zaangażowanie
   field_office_procedures: Przestrzeganie procedur biura
-  field_comment: Komentarz
+  field_notes: Uwagi
   field_votes_count: Głosów
   activerecord:
     models:
@@ -68,7 +67,7 @@ pl:
         quality: Jakość pracy
         commitment: Zaangażowanie
         office_procedures: Przestrzeganie procedur biura
-        comment: Komentarz
+        notes: Uwagi
         created_at: Utworzono
         updated_at: Edytowano
     errors:

@@ -5,10 +5,14 @@ class CreateSneakPollVotes < ActiveRecord::Migration
       t.integer :voter_id, :null => false
       t.integer :user_id,  :null => false
       t.integer :timeliness
+      t.string  :timeliness_notes
       t.integer :quality
+      t.string  :quality_notes
       t.integer :commitment
+      t.string  :commitment_notes
       t.integer :office_procedures
-      t.string  :comment
+      t.string  :office_procedures_notes
+      t.string  :notes
 
       t.timestamps :null => false
     end
