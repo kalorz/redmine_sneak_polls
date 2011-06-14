@@ -44,11 +44,32 @@
                             <legend class="vote_panel_title"><%= vote.user -%></legend>
                             <%- fields_for "vote[#{idx}]", vote do |vote_fields| -%>
                                 <%= vote_fields.hidden_field :user_id -%>
-                                <p><%= vote_fields.label :timeliness, "#{l(:field_timeliness)}:" -%><%= vote_fields.select :timeliness, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
-                                <p><%= vote_fields.label :quality, "#{l(:field_quality)}:" -%><%= vote_fields.select :quality, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
-                                <p><%= vote_fields.label :commitment, "#{l(:field_commitment)}:" -%><%= vote_fields.select :commitment, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
-                                <p><%= vote_fields.label :office_procedures, "#{l(:field_office_procedures)}:" -%><%= vote_fields.select :office_procedures, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
-                                <p><%= vote_fields.label :notes, "#{l(:field_notes)}:" -%><%= vote_fields.text_area :notes, :rows => 2, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
+                                <p>
+                                  <%= vote_fields.label :timeliness, "#{l(:field_timeliness)}:" -%>
+                                  <%= vote_fields.select :timeliness, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%>
+                                  <br />
+                                  <%= vote_fields.text_area :timeliness_notes, :rows => 2, :disabled => !can_vote?, :readonly => !can_vote? -%>
+                                </p>
+                                <p>
+                                  <%= vote_fields.label :quality, "#{l(:field_quality)}:" -%>
+                                  <%= vote_fields.select :quality, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%>
+                                  <br />
+                                  <%= vote_fields.text_area :quality_notes, :rows => 2, :disabled => !can_vote?, :readonly => !can_vote? -%>
+                                </p>
+                                <p>
+                                  <%= vote_fields.label :commitment, "#{l(:field_commitment)}:" -%>
+                                  <%= vote_fields.select :commitment, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%>
+                                  <br />
+                                  <%= vote_fields.text_area :commitment_notes, :rows => 2, :disabled => !can_vote?, :readonly => !can_vote? -%>
+                                </p>
+                                <p>
+                                  <%= vote_fields.label :office_procedures, "#{l(:field_office_procedures)}:" -%>
+                                  <%= vote_fields.select :office_procedures, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%>
+                                  <br />
+                                  <%= vote_fields.text_area :office_procedures_notes, :rows => 2, :disabled => !can_vote?, :readonly => !can_vote? -%>
+                                </p>
+                                <hr />
+                                <p><%= vote_fields.label :notes, "#{l(:field_notes)}:" -%><%= vote_fields.text_area :notes, :rows => 3, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
                             <%- end -%>
                         </fieldset>
                     </li>
