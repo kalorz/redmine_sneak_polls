@@ -20,6 +20,8 @@ pl:
   button_sneak_poll_vote: Zagłosuj
   text_sneak_poll_added_title: Dodano nową ankietę %{sneak_poll} do projektu %{project}.
   text_sneak_poll_added_body: Zachęcamy do głosowania na swoich ulubionych współpracowników!
+  text_sneak_poll_voted: Pomyślnie zagłosowano na ankietę %{sneak_poll}.
+  text_sneak_poll_vote_error: Podczas głosowania wystąpiły błędy. Proszę poprawić zaznaczone głosy.
   project_module_sneak_polls: Ankiety
   permission_sneak_polls: Ankiety
   permission_view_sneak_polls: Przeglądanie Ankiet

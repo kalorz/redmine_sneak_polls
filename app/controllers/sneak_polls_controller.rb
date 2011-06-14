@@ -66,7 +66,13 @@ class SneakPollsController < ApplicationController
       @votes.reject(&:blank?).each(&:save)                          # Create or update non-blank votes
     end
 
-    redirect_to :controller => 'sneak_polls', :action => 'show', :project_id => @project, :id => @sneak_poll, :tab => 'sneak-polls'
+    if @votes.detect(&:invalid?)
+      flash.now[:error] = t(:text_sneak_poll_vote_error)
+      render :action => 'show'
+    else
+      flash[:notice] = t(:text_sneak_poll_voted, :sneak_poll => @sneak_poll.title)
+      redirect_to :controller => 'sneak_polls', :action => 'show', :project_id => @project, :id => @sneak_poll, :tab => 'sneak-polls'
+    end
   end
 
   private ##############################################################################################################

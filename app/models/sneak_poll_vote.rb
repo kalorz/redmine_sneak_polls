@@ -63,6 +63,7 @@ class SneakPollVote < ActiveRecord::Base
     classes << (blank? ? 'blank' : 'voted')
     classes << (grades_blank? ? 'grades-blank' : 'grades-voted')
     classes << (comment.blank? ? 'comment-blank' : 'comment-voted')
+    classes << (valid? ? 'valid' : 'invalid')
     " #{classes.join(' ')} "
   end
 
