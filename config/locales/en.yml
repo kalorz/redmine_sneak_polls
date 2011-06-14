@@ -1,0 +1,28 @@
+en:
+  label_sneak_polls_title: Polls
+  label_sneak_poll: Poll
+  label_sneak_poll_plural: Polls
+  label_sneak_poll_new: Add new Poll
+  label_sneak_poll_create: Create Poll
+  label_sneak_poll_edit: Edit Poll
+  label_sneak_poll_edit_title: 'Edit Poll: %{title}'
+  label_sneak_poll_update: Update Poll
+  label_sneak_poll_destroy: Delete Poll
+  label_sneak_poll_title: 'Poll: %{title}'
+  label_sneak_poll_blank_versions: No Milestones assigned to Poll.
+  label_sneak_poll_versions: 'Assigned Milestones:'
+  label_sneak_poll_not_applicable: Not applicable
+  label_sneak_poll_not_applicable_abbr: N/A
+  label_sneak_poll_vote_comment_add: add comment...
+  label_sneak_poll_not_allowed_to_vote: You are not allowed to vote on this Poll.
+  label_sneak_poll_average: Average
+  label_sneak_poll_average_average: Average of averages
+  button_sneak_poll_vote: Vote
+  text_sneak_poll_added_title: New Poll %{sneak_poll} has been added to project %{project}.
+  text_sneak_poll_added_body: We encourage you to vote for your favorite workmate!
+  project_module_sneak_polls: Polls
+  permission_sneak_polls: Polls
+  permission_view_sneak_polls: Viewing Polls
+  permission_manage_sneak_polls: Managing Polls
+  permission_vote_sneak_polls: Voting in Polls
+  field_votes_count: Votes

@@ -1,0 +1,65 @@
+<%- content_for :header_tags do -%>
+    <%= stylesheet_link_tag 'sneak_polls', :plugin => 'redmine_sneak_polls' -%>
+<%- end -%>
+
+<%- html_title t(:label_sneak_poll_title, :title => @sneak_poll.title) -%>
+
+<%- if can_manage? -%>
+    <div class="contextual">
+        <%= link_to t(:button_edit), {:action => 'edit'}, :class => 'icon icon-edit' -%>
+        |
+        <%= link_to l(:button_delete), {:controller => 'sneak_polls', :action => 'destroy', :project_id => @project, :id => @sneak_poll}, :confirm => l(:text_are_you_sure), :method => :post, :class => 'icon icon-del', :title => l(:button_delete) -%>
+    </div>
+<%- end -%>
+
+<h2><%= t(:label_sneak_poll_title, :title => @sneak_poll.title) -%></h2>
+
+<%- unless can_vote? -%>
+    <p class="warning"><%= t(:label_sneak_poll_not_allowed_to_vote) -%></p>
+<%- end -%>
+
+<%- unless @sneak_poll.versions.blank? -%>
+    <p><%= t(:label_sneak_poll_versions) -%></p>
+    <ul>
+        <%- @sneak_poll.versions.each do |version| -%>
+            <li><%= link_to h(version.name), {:controller => 'versions', :action => 'show', :project_id => version.project, :id => version}, :target => '_blank' -%></li>
+        <%- end -%>
+    </ul>
+
+    <%- form_tag url_for(:controller => 'sneak_polls', :action => can_vote? ? 'vote' : 'show', :project_id => @project, :id => @sneak_poll), :method => can_vote? ? :post : :get, :class => 'tabular' do -%>
+        <div class="splitcontentleft">
+            <div class="tabs">
+                <ul id="vote_tabs">
+                    <%- @votes.each_with_index do |vote, idx| -%>
+                        <li class="vote_tab<%= vote.css_classes -%>"><%= link_to vote.user, "##{dom_id(vote.user)}", :onclick => "showTab('#{dom_id(vote.user)}'); this.blur(); return false;", :class => idx == 0 ? 'selected' : nil, :id => "tab-#{dom_id(vote.user)}" -%></li>
+                    <%- end -%>
+                </ul>
+            </div>
+        </div>
+        <div class="splitcontentright">
+            <ul id="vote_panels">
+                <%- @votes.each_with_index do |vote, idx| -%>
+                    <li class="tab-content box vote_panel <%= vote.css_classes -%>" id="tab-content-<%= dom_id(vote.user) -%>"<%= ' style="display: none;"' unless idx == 0 -%>>
+                        <fieldset>
+                            <legend class="vote_panel_title"><%= vote.user -%></legend>
+                            <%- fields_for "vote[#{idx}]", vote do |vote_fields| -%>
+                                <%= vote_fields.hidden_field :user_id -%>
+                                <p><%= vote_fields.label :timeliness, "#{l(:field_timeliness)}:" -%><%= vote_fields.select :timeliness, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
+                                <p><%= vote_fields.label :quality, "#{l(:field_quality)}:" -%><%= vote_fields.select :quality, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
+                                <p><%= vote_fields.label :commitment, "#{l(:field_commitment)}:" -%><%= vote_fields.select :commitment, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
+                                <p><%= vote_fields.label :office_procedures, "#{l(:field_office_procedures)}:" -%><%= vote_fields.select :office_procedures, SneakPollVote::GRADES_RANGE, {:include_blank => t(:label_sneak_poll_not_applicable_abbr)}, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
+                                <p><%= vote_fields.label :comment, "#{l(:field_comment)}:" -%><%= vote_fields.text_area :comment, :rows => 2, :disabled => !can_vote?, :readonly => !can_vote? -%></p>
+                            <%- end -%>
+                        </fieldset>
+                    </li>
+                <%- end -%>
+            </ul>
+        </div>
+        <div style="clear: both;"></div>
+        <%- if can_vote? -%>
+            <%= submit_tag t(:button_sneak_poll_vote) -%>
+        <%- end -%>
+    <%- end -%>
+<%- else -%>
+    <p><%= t(:label_sneak_poll_blank_versions) -%></p>
+<%- end -%>

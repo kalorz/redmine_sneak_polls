@@ -1,0 +1,89 @@
+pl:
+  label_sneak_polls_title: Ankiety
+  label_sneak_poll: Ankieta
+  label_sneak_poll_plural: Ankiety
+  label_sneak_poll_new: Dodaj nową Ankietę
+  label_sneak_poll_create: Utwórz Ankietę
+  label_sneak_poll_edit: Edytuj Ankietę
+  label_sneak_poll_edit_title: 'Edytuj Ankietę: %{title}'
+  label_sneak_poll_update: Zapisz Ankietę
+  label_sneak_poll_destroy: Usuń Ankietę
+  label_sneak_poll_title: 'Ankieta: %{title}'
+  label_sneak_poll_blank_versions: Brak Milestone'ów przypisanych do Ankiety.
+  label_sneak_poll_versions: 'Przypisane Milestony:'
+  label_sneak_poll_not_applicable: Nie dotyczy
+  label_sneak_poll_not_applicable_abbr: N/D
+  label_sneak_poll_vote_comment_add: dodaj komentarz...
+  label_sneak_poll_not_allowed_to_vote: Nie możesz głosować w tej ankiecie.
+  label_sneak_poll_average: Średnia ogółem
+  label_sneak_poll_average_average: Średnia średnich
+  button_sneak_poll_vote: Zagłosuj
+  text_sneak_poll_added_title: Dodano nową ankietę %{sneak_poll} do projektu %{project}.
+  text_sneak_poll_added_body: Zachęcamy do głosowania na swoich ulubionych współpracowników!
+  project_module_sneak_polls: Ankiety
+  permission_sneak_polls: Ankiety
+  permission_view_sneak_polls: Przeglądanie Ankiet
+  permission_manage_sneak_polls: Zarządzanie Ankietami
+  permission_vote_sneak_polls: Głosowanie w Ankietach
+  # Redmine patch overrides default Rails translations... :(
+  field_project: Projekt
+  field_title: Tytuł
+  field_versions: Przypisane Milestony
+  field_version_ids: Przypisane Milestony
+  field_versions_count: Przypisanych Milestone'ów
+  field_votes: Oddane głosy
+  field_votes_count: Oddanych głosów
+  field_poll: Ankieta
+  field_voter: Głosujący
+  field_user: Oceniany użytkownik
+  field_timeliness: Terminowość
+  field_quality: Jakość pracy
+  field_commitment: Zaangażowanie
+  field_office_procedures: Przestrzeganie procedur biura
+  field_comment: Komentarz
+  field_votes_count: Głosów
+  activerecord:
+    models:
+      sneak_poll: Ankieta
+      sneak_poll_vote: Głos w Ankiecie
+    attributes:
+      sneak_poll:
+        project: Projekt
+        title: Tytuł
+        versions: Przypisane Milestony
+        version_ids: Przypisane Milestony
+        versions_count: Przypisanych Milestone'ów
+        votes: Oddane głosy
+        vote_ids: Oddane głosy
+        votes_count: Oddanych głosów
+        created_at: Utworzono
+        updated_at: Edytowano
+      sneak_poll_vote:
+        poll: Ankieta
+        voter: Głosujący
+        user: Oceniany użytkownik
+        timeliness: Terminowość
+        quality: Jakość pracy
+        commitment: Zaangażowanie
+        office_procedures: Przestrzeganie procedur biura
+        comment: Komentarz
+        created_at: Utworzono
+        updated_at: Edytowano
+    errors:
+      models:
+        sneak_poll:
+          invalid_versions: Wszystkie przypisane Milestony muszą należeć do jednego Projektu
+          blank_versions: Należy przypisać co najmniej jeden Milestone
+          attributes:
+            project:
+              blank: nie może być pusty
+            title:
+              blank: nie może być pusty
+              too_short:
+                one: jest za krótki (minimalnie %{count} znak)
+                few: jest za krótki (minimalnie %{count} znaki)
+                other: jest za krótki (minimalnie %{count} znaków)
+              too_long:
+                one: jest za długi (minimalnie %{count} znak)
+                few: jest za długi (minimalnie %{count} znaki)
+                other: jest za długi (minimalnie %{count} znaków)

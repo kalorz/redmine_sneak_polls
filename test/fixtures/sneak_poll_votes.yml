@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  sneak_poll: 
+  user: 
+  timeliness: 1
+  quality: 1
+  commitment: 1
+  office_procedures: 1
+  comment: MyString
+two:
+  id: 2
+  sneak_poll: 
+  user: 
+  timeliness: 1
+  quality: 1
+  commitment: 1
+  office_procedures: 1
+  comment: MyString

@@ -1,0 +1,16 @@
+<%= error_messages_for 'sneak_poll' %>
+
+<!--[form:sneak_poll]-->
+<div class="box">
+  <p><%= f.label :title %><%= f.text_field :title, :required => true %></p>
+  <fieldset>
+    <legend><%= l(:text_select_project_modules) %></legend>
+    <% f.object.project.versions.each do |version| %>
+        <p>
+          <label><%= check_box_tag 'sneak_poll[version_ids][]', version.id, f.object.versions.include?(version) -%>
+            <%= h(version.name) %></label>
+        </p>
+  <% end %>
+  </fieldset>
+</div>
+<!--[eoform:sneak_poll]-->

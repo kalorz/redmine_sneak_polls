@@ -1,0 +1,25 @@
+.controller-sneak_polls .splitcontentleft  { width: 33%; }
+.controller-sneak_polls .splitcontentright { width: 66%; }
+.controller-sneak_polls .tabular p { padding-left: 255px !important; }
+.controller-sneak_polls .tabular label { margin-left: -255px !important; width: 250px !important; }.controller-sneak_polls #content .tabs { height: auto !important; overflow-x: visible !important; overflow-y: visible !important; }
+.controller-sneak_polls #content .tabs ul { position: relative !important; display: block !important; width: auto !important; }
+.controller-sneak_polls #content .tabs ul li { float: none !important; }
+.controller-sneak_polls #content .tabs ul li.vote_tab a { padding-left: 24px !important; background-image: url("/images/help.png") !important; background-position: 4px 50% !important; background-repeat: no-repeat !important; }
+.controller-sneak_polls #content .tabs ul li.vote_tab.blank a { background-image: url("/images/fav_off.png") !important; }
+.controller-sneak_polls #content .tabs ul li.vote_tab.voted a { background-image: url("/images/fav.png") !important; }
+.controller-sneak_polls #content .tabs ul li.vote_tab.grades-blank.comment-voted a { background-image: url("/images/warning.png") !important; }
+.controller-sneak_polls ul#vote_panels { display: block; list-style: none !important; margin: 0 !important; padding: 0 !important; }
+.controller-sneak_polls li.vote_panel { display: block; list-style: none !important; }
+.controller-sneak_polls table.sneak_polls td, .controller-sneak_polls table.sneak_polls th { white-space: nowrap; }
+.controller-sneak_polls table.sneak_polls .title { text-align: left; white-space: normal; width: 100%; }
+.controller-sneak_polls table.sneak_polls .int,
+.controller-sneak_polls table.sneak_polls .float { text-align: right; padding-left: 2em; }
+.controller-sneak_polls .grade-nan { color: #ccc; }
+.controller-sneak_polls .normalized-grade-0 { color: #900; }
+.controller-sneak_polls .normalized-grade-1 {}
+.controller-sneak_polls .normalized-grade-2 {}
+.controller-sneak_polls .normalized-grade-3 {}
+.controller-sneak_polls .normalized-grade-4 {}
+.controller-sneak_polls .normalized-grade-5 { color: #090; }
+.controller-sneak_polls table.sneak_polls tfoot tr.summary th { font-weight: normal; padding-right: 2px; }
+.controller-sneak_polls table.sneak_polls tfoot tr.summary .label { font-weight: bold; text-align: right; }

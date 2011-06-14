@@ -1,0 +1,12 @@
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'sneak_polls', :plugin => 'redmine_sneak_polls' %>
+<% end %>
+
+<% html_title t(:label_sneak_poll_edit_title, :title => @sneak_poll.title) %>
+
+<h2><%= t(:label_sneak_poll_edit_title, :title => @sneak_poll.title) %></h2>
+
+<% form_for :sneak_poll, @sneak_poll, :url => {:controller => 'sneak_polls', :action => 'edit', :project_id => @project, :id => @sneak_poll} do |f| %>
+    <%= render :partial => 'form', :locals => {:f => f} %>
+    <%= submit_tag l(:label_sneak_poll_update) %>
+<% end %>
