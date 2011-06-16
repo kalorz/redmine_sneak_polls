@@ -1,7 +1,11 @@
 .controller-sneak_polls .splitcontentleft  { width: 33%; }
 .controller-sneak_polls .splitcontentright { width: 66%; }
 .controller-sneak_polls .tabular p { padding-left: 255px !important; }
-.controller-sneak_polls .tabular label { margin-left: -255px !important; width: 250px !important; }.controller-sneak_polls #content .tabs { height: auto !important; overflow-x: visible !important; overflow-y: visible !important; }
+.controller-sneak_polls .tabular label { margin-left: -255px !important; width: 250px !important; }
+.controller-sneak_polls .tabular label.inline { margin-left: auto !important; width: auto !important; }
+.controller-sneak_polls .tabular label.invalid { color: #900; }
+.controller-sneak_polls span.radio { margin-right: 1.5em; }
+.controller-sneak_polls #content .tabs { height: auto !important; overflow-x: visible !important; overflow-y: visible !important; }
 .controller-sneak_polls #content .tabs ul { position: relative !important; display: block !important; width: auto !important; }
 .controller-sneak_polls #content .tabs ul li { float: none !important; }
 .controller-sneak_polls #content .tabs ul li.vote_tab a { padding-left: 24px !important; background-image: url("/images/help.png") !important; background-position: 4px 50% !important; background-repeat: no-repeat !important; }

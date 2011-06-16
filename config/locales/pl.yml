@@ -38,9 +38,13 @@ pl:
   field_voter: Głosujący
   field_user: Oceniany użytkownik
   field_timeliness: Terminowość
+  field_timeliness_notes: Uwagi
   field_quality: Jakość pracy
+  field_quality_notes: Uwagi
   field_commitment: Zaangażowanie
+  field_commitment_notes: Uwagi
   field_office_procedures: Przestrzeganie procedur biura
+  field_office_procedures_notes: Uwagi
   field_notes: Uwagi
   field_votes_count: Głosów
   activerecord:
@@ -88,3 +92,13 @@ pl:
                 one: jest za długi (minimalnie %{count} znak)
                 few: jest za długi (minimalnie %{count} znaki)
                 other: jest za długi (minimalnie %{count} znaków)
+        sneak_poll_vote:
+          attributes:
+            timeliness_notes:
+              blank: Wybrano skrajną wartość. Proszę umotywować w polu uwag.
+            quality_notes:
+              blank: Wybrano skrajną wartość. Proszę umotywować w polu uwag.
+            commitment_notes:
+              blank: Wybrano skrajną wartość. Proszę umotywować w polu uwag.
+            office_procedures_notes:
+              blank: Wybrano skrajną wartość. Proszę umotywować w polu uwag.
