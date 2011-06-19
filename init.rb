@@ -11,11 +11,11 @@ end
 
 Redmine::Plugin.register :redmine_sneak_polls do
   name        'Sneak Polls'
-  author      'Activeweb'
+  author      'Karol Sarnacki'
   description 'Plugin for informing on colleagues'
-  version     '0.0.3'
-  url         'http://svn.activeweb.pl/redmine_sneak_polls/'
-  author_url  'http://www.activeweb.pl/'
+  version     '0.0.4'
+  url         'https://github.com/sodercober/redmine_sneak_polls'
+  author_url  'https://github.com/sodercober'
 
   project_module :sneak_polls do
     permission :view_sneak_polls,   {:sneak_polls => [:show, :index]}, :public => true, :require => :loggedin
