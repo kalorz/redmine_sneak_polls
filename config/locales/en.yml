@@ -19,9 +19,73 @@ en:
   button_sneak_poll_vote: Vote
   text_sneak_poll_added_title: New Poll %{sneak_poll} has been added to project %{project}.
   text_sneak_poll_added_body: We encourage you to vote for your favorite workmate!
+  text_sneak_poll_voted: Successfully voted on %{sneak_poll} Poll.
+  text_sneak_poll_vote_error: An error occured during voting. Please correct marked votes.
   project_module_sneak_polls: Polls
   permission_sneak_polls: Polls
   permission_view_sneak_polls: Viewing Polls
   permission_manage_sneak_polls: Managing Polls
   permission_vote_sneak_polls: Voting in Polls
-  field_votes_count: Votes
+  # Redmine patch overrides default Rails translations... :(
+  field_project: Project
+  field_title: Title
+  field_versions: Assigned Milestones
+  field_version_ids: Assigned Milestones
+  field_versions_count: Assigned Milestones Count
+  field_votes: Votes
+  field_votes_count: Votes count
+  field_poll: Poll
+  field_voter: Voter
+  field_user: Voted user
+  field_timeliness: Timeliness
+  field_timeliness_notes: Timeliness notes
+  field_quality: Quality
+  field_quality_notes: Quality notes
+  field_commitment: Commitment
+  field_commitment_notes: Commitment notes
+  field_office_procedures: Office procedures
+  field_office_procedures_notes: Office procedures notes
+  field_notes: General notes
+  field_votes_count: Votes count
+  activerecord:
+    models:
+      sneak_poll: Poll
+      sneak_poll_vote: Poll Vote
+    attributes:
+      sneak_poll:
+        project: Project
+        title: Title
+        versions: Assigned Milestones
+        version_ids: Assigned Milestones
+        versions_count: Assigned Milestones Count
+        votes: Votes
+        vote_ids: Votes
+        votes_count: Votes count
+        created_at: Created at
+        updated_at: Updated at
+      sneak_poll_vote:
+        poll: Poll
+        voter: Voter
+        user: Voted user
+        timeliness: Timeliness
+        quality: Quality
+        commitment: Commitment
+        office_procedures: Office procedures
+        notes: General notes
+        created_at: Created at
+        updated_at: Updated at
+    errors:
+      models:
+        sneak_poll:
+          invalid_versions: All assigned Milestones must belong to one Project
+          blank_versions: At least one Milestone is required
+        sneak_poll_vote:
+          attributes:
+            timeliness_notes:
+              blank: Extreme value chosen. Please justify your choice.
+            quality_notes:
+              blank: Extreme value chosen. Please justify your choice.
+            commitment_notes:
+              blank: Extreme value chosen. Please justify your choice.
+            office_procedures_notes:
+              blank: Extreme value chosen. Please justify your choice.
