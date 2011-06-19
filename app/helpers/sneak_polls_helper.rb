@@ -22,7 +22,7 @@ module SneakPollsHelper
 
   def radio_select(form, field, collection, options = {})
     ''.tap do |html|
-      html << form.label(field, "#{l("field_#{field}")}:", options.merge(:class => form.object.errors.on("#{field}_notes") ? 'invalid' : nil))
+      html << form.label("#{field}_notes", "#{l("field_#{field}")}:", options.merge(:class => form.object.errors.on("#{field}_notes") ? 'invalid' : nil))
       if blank = options.delete(:include_blank)
         html << content_tag(:span, :class => 'radio') do
           form.radio_button(field, '', options) +
