@@ -4,8 +4,8 @@ class SneakPollVote < ActiveRecord::Base
   GRADES_RANGE = -2..2
   
   belongs_to :poll, :class_name => 'SneakPoll', :counter_cache => :votes_count
-  belongs_to :voter, :class_name => 'User'
-  belongs_to :user
+  belongs_to :voter, :class_name => 'User', :inverse_of => :sneak_poll_votings
+  belongs_to :user, :inverse_of => :sneak_poll_votes
 
   attr_accessible :timeliness, :timeliness_notes, :quality, :quality_notes,
                   :commitment, :commitment_notes, :office_procedures, :office_procedures_notes,
@@ -22,8 +22,10 @@ class SneakPollVote < ActiveRecord::Base
     validates_presence_of  "#{column}_notes", :allow_blank => false, :if => Proc.new{ |vote| vote[column] == GRADES_RANGE.first || vote[column] == GRADES_RANGE.last }
   end
 
+  named_scope :by_poll,       lambda {|poll|    {:conditions => {:poll_id => poll}}}
   named_scope :by_project,    lambda {|project| {:joins => :poll, :conditions => {:sneak_polls => {:project_id => project}}}}
   named_scope :by_voter,      lambda {|user|    {:conditions => {:voter_id => user}}}
+  named_scope :not_by_voter,  lambda {|user|    {:conditions => ["#{quoted_table_name}.voter_id NOT IN (?)", user]}}
   named_scope :by_user,       lambda {|voter|   {:conditions => {:user_id  => voter}}}
   named_scope :exclude_voter, lambda {|voter|   {:conditions => ["#{quoted_table_name}.voter_id <> ?", voter]}}
   named_scope :exclude_user,  lambda {|user|    {:conditions => ["#{quoted_table_name}.user_id <> ?",  user]}}
@@ -37,6 +39,11 @@ class SneakPollVote < ActiveRecord::Base
                                                   " OR #{quoted_table_name}.commitment IS NOT NULL OR (#{quoted_table_name}.commitment_notes IS NOT NULL AND #{quoted_table_name}.commitment_notes <> '')" +
                                                   " OR #{quoted_table_name}.office_procedures IS NOT NULL OR (#{quoted_table_name}.office_procedures_notes IS NOT NULL AND #{quoted_table_name}.office_procedures_notes <> '')" +
                                                   " OR (#{quoted_table_name}.notes IS NOT NULL AND #{quoted_table_name}.notes <> '')"]
+  named_scope :by_master,     lambda{ {
+      :joins      => [:user, :voter, {:poll => {:project => {:memberships => :member_roles}}}],
+      :conditions => ['(voters_sneak_poll_votes.boss = ?) OR (voters_sneak_poll_votes.id = users.master_id) OR (voter_id = members.user_id AND member_roles.role_id = ?)', true, Role::PROJECT_MANAGER_ID],
+      :group      => 'sneak_poll_votes.id'
+  } }
 
   def self.unique(sneak_poll, voter, attributes_or_user)
     if attributes_or_user.is_a?(Hash)
