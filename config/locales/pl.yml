@@ -47,6 +47,9 @@ pl:
   field_office_procedures_notes: Uwagi
   field_notes: Ogólne uwagi
   field_votes_count: Głosów
+  field_main_boss: Szef szefów
+  field_boss: Przełożony
+  field_boss_id: Przełożony
   activerecord:
     models:
       sneak_poll: Ankieta

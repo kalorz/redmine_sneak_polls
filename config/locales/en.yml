@@ -47,6 +47,9 @@ en:
   field_office_procedures_notes: Office procedures notes
   field_notes: General notes
   field_votes_count: Votes count
+  field_main_boss: Main boss
+  field_boss: Boss
+  field_boss_id: Boss
   activerecord:
     models:
       sneak_poll: Poll
