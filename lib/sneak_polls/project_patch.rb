@@ -19,6 +19,10 @@ module SneakPolls
         grades.blank? ? nil : grades.sum / grades.size
       end
 
+      def supports_fixed_manager
+        column_names.include?('fixed_manager_id')
+      end
+
     end
 
     module InstanceMethods

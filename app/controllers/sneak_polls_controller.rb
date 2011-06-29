@@ -39,10 +39,8 @@ class SneakPollsController < ApplicationController
     sort_init 'users.lastname'
     sort_update %w(users.lastname average_timeliness average_quality average_commitment average_office_procedures)
 
-    @principals  = User.all(:select => :id, :conditions => {:boss => true}).map(&:id)
-    @principals += User.project_manager(@sneak_poll.project).map(&:id) if User.respond_to?(:project_manager)
-    @principal_stats = @sneak_poll.votes.by_principals(@principals).select_stats.all(:include => :user).group_by(&:user)
-    @coworker_stats = @sneak_poll.votes.not_by_principals(@principals).select_stats.all(:include => :user).group_by(&:user)
+    @principal_stats = @sneak_poll.votes.by_principals.select_stats.all(:include => :user).group_by(&:user)
+    @coworker_stats = @sneak_poll.votes.exclude_principals.select_stats.all(:include => :user).group_by(&:user)
     @users = (@principal_stats.keys + @coworker_stats.keys).uniq
   end
 
