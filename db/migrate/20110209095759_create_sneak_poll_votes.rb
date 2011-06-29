@@ -12,6 +12,10 @@ class CreateSneakPollVotes < ActiveRecord::Migration
       t.string  :commitment_notes
       t.integer :office_procedures
       t.string  :office_procedures_notes
+      t.integer :grade1
+      t.string  :grade1_notes
+      t.integer :grade2
+      t.string  :grade2_notes
       t.string  :notes
 
       t.timestamps :null => false

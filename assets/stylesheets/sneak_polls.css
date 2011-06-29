@@ -20,6 +20,7 @@
 .controller-sneak_polls table.sneak_polls .title { text-align: left; white-space: normal; width: 100%; }
 .controller-sneak_polls table.sneak_polls .int,
 .controller-sneak_polls table.sneak_polls .float { text-align: right; padding-left: 2em; }
+.controller-sneak_polls table.sneak_polls .left { text-align: left; padding-right: 2em; padding-left: 2px; }
 .controller-sneak_polls .grade-nan { color: #ccc; }
 .controller-sneak_polls .normalized-grade-0 { color: #900; }
 .controller-sneak_polls .normalized-grade-1 {}

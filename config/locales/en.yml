@@ -10,9 +10,11 @@ en:
   label_sneak_poll_destroy: Delete Poll
   label_sneak_poll_title: 'Poll: %{title}'
   label_sneak_poll_blank_versions: No Milestones assigned to Poll.
+  label_sneak_poll_blank_stats: No statistics to show.
   label_sneak_poll_versions: 'Assigned Milestones:'
   label_sneak_poll_not_applicable: Not applicable
   label_sneak_poll_not_applicable_abbr: N/A
+  label_sneak_poll_not_applicable_symbol: '&mdash;'
   label_sneak_poll_not_allowed_to_vote: You are not allowed to vote on this Poll.
   label_sneak_poll_average: Average
   label_sneak_poll_average_average: Average of averages
@@ -46,6 +48,10 @@ en:
   field_commitment_notes: Commitment notes
   field_office_procedures: Office procedures
   field_office_procedures_notes: Office procedures notes
+  field_grade1: PM grade 1
+  field_grade1_notes: PM grade 1 notes
+  field_grade2: PM grade 2
+  field_grade2_notes: PM grade 2 notes
   field_notes: General notes
   field_votes_count: Votes count
   field_main_boss: Main boss
@@ -92,4 +98,8 @@ en:
             commitment_notes:
               blank: Extreme value chosen. Please justify your choice.
             office_procedures_notes:
+              blank: Extreme value chosen. Please justify your choice.
+            grade1_notes:
+              blank: Extreme value chosen. Please justify your choice.
+            grade2_notes:
               blank: Extreme value chosen. Please justify your choice.

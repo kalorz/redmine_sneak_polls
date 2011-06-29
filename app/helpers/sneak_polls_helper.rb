@@ -17,7 +17,7 @@ module SneakPollsHelper
   end
 
   def format_grade(grade)
-    grade ? number_with_precision(grade, :precision => 2) : t(:label_sneak_poll_not_applicable_abbr)
+    grade ? number_with_precision(grade, :precision => 2) : t(:label_sneak_poll_not_applicable_symbol)
   end
 
   def radio_select(form, field, collection, options = {})
@@ -26,13 +26,13 @@ module SneakPollsHelper
       if blank = options.delete(:include_blank)
         html << content_tag(:span, :class => 'radio') do
           form.radio_button(field, '', options) +
-              form.label(field, blank, options.merge(:value => '', :class => 'inline')) unless blank.is_a?(TrueClass)
+              form.label(field, blank, options.merge(:value => '', :class => 'inline grade-nan')) unless blank.is_a?(TrueClass)
         end
       end
       collection.each do |element|
         html << content_tag(:span, :class => 'radio') do
           form.radio_button(field, element, options.merge(:id => "#{form.object_name}_#{field}_#{element}")) +#TODO: Remove :id after migration to Rails 3
-              form.label(field, element, options.merge(:for => "#{form.object_name}_#{field}_#{element}", :class => 'inline')) #TODO: Remove :id after migration to Rails 3
+              form.label(field, element, options.merge(:for => "#{form.object_name}_#{field}_#{element}", :class => "inline#{SneakPoll.grade_css_classes(element)}")) #TODO: Remove :id after migration to Rails 3
         end
       end
     end

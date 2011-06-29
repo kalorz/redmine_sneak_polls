@@ -50,6 +50,8 @@
                                 <%= grade_field vote_fields, :quality -%>
                                 <%= grade_field vote_fields, :commitment -%>
                                 <%= grade_field vote_fields, :office_procedures -%>
+                                <%= grade_field(vote_fields, :grade1) if @project.respond_to?(:fixed_manager_id) && @project.fixed_manager_id == vote.user_id -%>
+                                <%= grade_field(vote_fields, :grade2) if @project.respond_to?(:fixed_manager_id) && @project.fixed_manager_id == vote.user_id -%>
                                 <hr />
                                 <p>
                                     <%= vote_fields.label :notes, "#{l(:field_notes)}:" -%>

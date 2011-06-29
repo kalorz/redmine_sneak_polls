@@ -2,7 +2,7 @@ class SneakPollVote < ActiveRecord::Base
   unloadable
 
   GRADES_RANGE      = -2..2
-  GRADE_COLUMNS     = [:timeliness, :quality, :commitment, :office_procedures]
+  GRADE_COLUMNS     = [:timeliness, :quality, :commitment, :office_procedures, :grade1, :grade2]
   COLUMNS_FOR_STATS = GRADE_COLUMNS.map{ |column| "AVG(#{quoted_table_name}.#{column}) AS average_#{column}" }.join(', ')
 
   belongs_to :poll, :class_name => 'SneakPoll', :counter_cache => :votes_count
@@ -11,6 +11,7 @@ class SneakPollVote < ActiveRecord::Base
 
   attr_accessible :timeliness, :timeliness_notes, :quality, :quality_notes,
                   :commitment, :commitment_notes, :office_procedures, :office_procedures_notes,
+                  :grade1, :grade1_notes, :grade2, :grade2_notes,
                   :notes
 
   validates_presence_of   :poll_id, :voter_id, :user_id
@@ -66,11 +67,11 @@ class SneakPollVote < ActiveRecord::Base
   end
 
   def grades_blank?
-    timeliness.blank? && quality.blank? && commitment.blank? && office_procedures.blank?
+    !GRADE_COLUMNS.detect{ |column| !self[column].blank? }
   end
 
   def notes_blank?
-    timeliness_notes.blank? && quality_notes.blank? && commitment_notes.blank? && office_procedures_notes.blank? && notes.blank?
+    notes.blank? && !GRADE_COLUMNS.detect{ |column| !self["#{column}_notes"].blank? }
   end
 
   def blank?

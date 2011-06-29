@@ -22,7 +22,8 @@ class SneakPoll < ActiveRecord::Base
 
   # Normalized average grade: 0..5
   def self.grade_css_classes(grade)
-    grade ? " normalized-grade-#{10 * (grade - SneakPollVote::GRADES_RANGE.first).round.to_i / (SneakPollVote::GRADES_RANGE.last - SneakPollVote::GRADES_RANGE.first) / 2} " : ' grade-nan '
+    grade = grade.to_d if grade.respond_to?(:to_d)
+    grade.is_a?(Numeric) ? " normalized-grade-#{10 * (grade - SneakPollVote::GRADES_RANGE.first).round.to_i / (SneakPollVote::GRADES_RANGE.last - SneakPollVote::GRADES_RANGE.first) / 2} " : ' grade-nan '
   end
 
   # Returns the mail adresses of users that should be notified

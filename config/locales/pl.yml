@@ -10,9 +10,11 @@ pl:
   label_sneak_poll_destroy: Usuń Ankietę
   label_sneak_poll_title: 'Ankieta: %{title}'
   label_sneak_poll_blank_versions: Brak Milestone'ów przypisanych do Ankiety.
+  label_sneak_poll_blank_stats: Brak statystyk do pokazania.
   label_sneak_poll_versions: 'Przypisane Milestony:'
   label_sneak_poll_not_applicable: Nie dotyczy
   label_sneak_poll_not_applicable_abbr: N/D
+  label_sneak_poll_not_applicable_symbol: '&mdash;'
   label_sneak_poll_not_allowed_to_vote: Nie możesz głosować w tej ankiecie.
   label_sneak_poll_average: Średnia ogółem
   label_sneak_poll_average_average: Średnia średnich
@@ -46,6 +48,10 @@ pl:
   field_commitment_notes: Uwagi
   field_office_procedures: Przestrzeganie procedur biura
   field_office_procedures_notes: Uwagi
+  field_grade1: Ocena PM nr 1
+  field_grade1_notes: Uwagi
+  field_grade2: Ocena PM nr 2
+  field_grade2_notes: Uwagi
   field_notes: Ogólne uwagi
   field_votes_count: Głosów
   field_main_boss: Szef szefów
@@ -105,4 +111,8 @@ pl:
             commitment_notes:
               blank: Wybrano skrajną wartość. Proszę umotywować w polu uwag.
             office_procedures_notes:
+              blank: Wybrano skrajną wartość. Proszę umotywować w polu uwag.
+            grade1_notes:
+              blank: Wybrano skrajną wartość. Proszę umotywować w polu uwag.
+            grade2_notes:
               blank: Wybrano skrajną wartość. Proszę umotywować w polu uwag.
