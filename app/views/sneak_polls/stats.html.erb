@@ -16,35 +16,4 @@
 
 <h2><%= t(:label_sneak_poll_title, :title => @sneak_poll.title) %></h2>
 
-<% unless @users.blank? %>
-    <table class="list sneak_polls">
-        <thead>
-            <tr>
-                <%= sort_header_tag 'users.lastname', :caption => l(:field_name) %>
-                <% SneakPollVote::GRADE_COLUMNS.each do |column| %>
-                    <%= sort_header_tag "average_#{column}", :caption => abbr_tag(:"field_#{column}"), :colspan => 2 %>
-                <% end %>
-            </tr>
-        </thead>
-        <tbody>
-            <% @users.each do |user| %>
-                <tr class="sneak_poll <%= cycle('even', 'odd') %>" id="<%= dom_id(user) %>">
-                    <td class="string title"><%= link_to_user(user) %></td>
-                    <% SneakPollVote::GRADE_COLUMNS.each do |column| %>
-                        <% principal_grade = @principal_stats[user] && @principal_stats[user].first.send("average_#{column}") %>
-                        <% coworker_grade  = @coworker_stats[user]  && @coworker_stats[user].first.send("average_#{column}") %>
-                        <td class="float">
-                            <span class="<%= SneakPoll.grade_css_classes(principal_grade) %>"><%= format_grade(principal_grade) %></span>
-                            /
-                        </td>
-                        <td class="float left">
-                            <span class="<%= SneakPoll.grade_css_classes(coworker_grade) %>"><%= format_grade(coworker_grade) %></span>
-                        </td>
-                    <% end %>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
-<% else %>
-    <p><%= t(:label_sneak_poll_blank_stats) %></p>
-<% end %>
+<%= render :partial => 'stats', :locals => {:users => @users, :principal_stats => @principal_stats, :coworker_stats => @coworker_stats} %>

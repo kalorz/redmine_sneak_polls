@@ -2,6 +2,7 @@ require 'redmine'
 require 'dispatcher'
 
 Dispatcher.to_prepare do
+  require_dependency 'sneak_polls/view_hooks'
   require_dependency 'principal'
   require_dependency 'user'
   require_dependency 'project'

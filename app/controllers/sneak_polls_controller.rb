@@ -13,15 +13,11 @@ class SneakPollsController < ApplicationController
     sort_init 'created_at'
     sort_update %w(title created_at votes_count average_timeliness average_quality average_commitment average_office_procedures average_grade)
 
-    #TODO: -> Model
-    if @sort_criteria.first_key
-      @sneak_polls.sort! do |p1, p2|
-        dir = @sort_criteria.first_asc? ? 1 : -1
-        a = p1.send(@sort_criteria.first_key.to_sym)
-        b = p2.send(@sort_criteria.first_key.to_sym)
-        a && b ? dir * (a <=> b) : (a.nil? && b.nil? ? 0 : (a.nil? ? 1 : -1))
-      end
-    end
+    sort_collection!(@sneak_polls)
+
+    @principal_stats = SneakPollVote.by_project(@project).by_principals.select_stats.all(:include => :user).group_by(&:user)
+    @coworker_stats = SneakPollVote.by_project(@project).exclude_principals.select_stats.all(:include => :user).group_by(&:user)
+    @users = (@principal_stats.keys + @coworker_stats.keys).uniq.sort_by(&:name)
 
     respond_to do |format|
       format.html
@@ -36,12 +32,14 @@ class SneakPollsController < ApplicationController
   end
 
   def stats
-    sort_init 'users.lastname'
-    sort_update %w(users.lastname average_timeliness average_quality average_commitment average_office_procedures)
+    sort_init 'name'
+    sort_update %w(name)
 
     @principal_stats = @sneak_poll.votes.by_principals.select_stats.all(:include => :user).group_by(&:user)
     @coworker_stats = @sneak_poll.votes.exclude_principals.select_stats.all(:include => :user).group_by(&:user)
     @users = (@principal_stats.keys + @coworker_stats.keys).uniq
+
+    sort_collection!(@users)
   end
 
   def new
@@ -96,6 +94,17 @@ class SneakPollsController < ApplicationController
 
   def set_sneak_poll
     @sneak_poll = @project.sneak_polls.find(params[:id])
+  end
+
+  def sort_collection!(collection, criteria = @sort_criteria)
+    if criteria.first_key
+      collection.sort! do |o1, o2|
+        dir = criteria.first_asc? ? 1 : -1
+        a = o1.send(criteria.first_key.to_sym)
+        b = o2.send(criteria.first_key.to_sym)
+        a && b ? dir * (a <=> b) : (a.nil? && b.nil? ? 0 : (a.nil? ? 1 : -1))
+      end
+    end
   end
 
 end

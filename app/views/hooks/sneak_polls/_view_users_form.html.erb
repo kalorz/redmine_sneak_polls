@@ -1,0 +1,5 @@
+</div>
+<h3><%= l(:label_sneak_poll_company_position) %></h3>
+<div class="box tabular">
+<p><%= form.check_box :boss %></p>
+<p><%= form.select :master_id, User.active.all.map{ |u| [u.name, u.id] }, :include_blank => true %></p>
