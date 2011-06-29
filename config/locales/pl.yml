@@ -21,6 +21,7 @@ pl:
   label_sneak_poll_company_position: Stanowisko we firmie
   label_sneak_polls_user_stats_per_project: Statystyki użytkowników w projekcie
   label_sneak_polls_user_stats_per_poll: Statystyki użytkowników w ankiecie
+  label_sneak_polls_poll_stats_per_user: Statystyki użytkownika w ankietach
   button_sneak_poll_vote: Zagłosuj
   button_stats: Statystyki
   text_sneak_poll_added_title: Dodano nową ankietę %{sneak_poll} do projektu %{project}.

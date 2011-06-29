@@ -38,6 +38,7 @@ class SneakPollVote < ActiveRecord::Base
               :conditions => GRADE_COLUMNS.map{ |column| "#{column} IS NOT NULL OR (#{column}_notes IS NOT NULL AND #{column}_notes <> '')" }.join(' OR ') +
                   " OR (notes IS NOT NULL AND notes <> '')"
   named_scope :select_stats,  :select => "user_id, #{COLUMNS_FOR_STATS}", :group => :user_id
+  named_scope :select_poll_stats, :select => "poll_id, #{COLUMNS_FOR_STATS}", :group => :poll_id
   named_scope :by_principals, Project.supports_fixed_manager ? {
       :joins => [:user, :voter, {:poll => :project}],
       :conditions => '(voter_id = COALESCE(users.master_id, -1)) OR (voters_sneak_poll_votes.boss) OR (voter_id = COALESCE(projects.fixed_manager_id, -1))'

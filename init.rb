@@ -7,10 +7,12 @@ Dispatcher.to_prepare do
   require_dependency 'user'
   require_dependency 'project'
   require_dependency 'mailer'
+  require_dependency 'application_helper'
 
-  User.send    :include, SneakPolls::UserPatch
-  Project.send :include, SneakPolls::ProjectPatch
-  Mailer.send  :include, SneakPolls::MailerPatch
+  User.send              :include, SneakPolls::UserPatch
+  Project.send           :include, SneakPolls::ProjectPatch
+  Mailer.send            :include, SneakPolls::MailerPatch
+  ApplicationHelper.send :include, SneakPolls::ApplicationHelperPatch
 end
 
 Redmine::Plugin.register :redmine_sneak_polls do

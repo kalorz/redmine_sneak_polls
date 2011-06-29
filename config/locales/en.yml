@@ -21,6 +21,7 @@ en:
   label_sneak_poll_company_position: Company position
   label_sneak_polls_user_stats_per_project: User statistics per project
   label_sneak_polls_user_stats_per_poll: User statistics per poll
+  label_sneak_polls_poll_stats_per_user: User statistics in polls
   button_sneak_poll_vote: Vote
   button_stats: Statistics
   text_sneak_poll_added_title: New Poll %{sneak_poll} has been added to project %{project}.
