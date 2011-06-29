@@ -4,7 +4,7 @@ class SneakPollsController < ApplicationController
   before_filter :set_project
   before_filter :authorize
   before_filter :set_sneak_polls, :only => :index
-  before_filter :set_sneak_poll, :only => [:show, :edit, :destroy, :vote]
+  before_filter :set_sneak_poll, :only => [:show, :stats, :edit, :destroy, :vote]
 
   helper :sort
   include SortHelper
@@ -34,7 +34,18 @@ class SneakPollsController < ApplicationController
     @votes += @project.users.reject{|user| (user == User.current) || @votes.map(&:user).include?(user)}.map{|user| @sneak_poll.votes.build{|vote| vote.voter = User.current; vote.user = user}}
     @votes.sort_by(&:user)
   end
-  
+
+  def stats
+    sort_init 'users.lastname'
+    sort_update %w(users.lastname average_timeliness average_quality average_commitment average_office_procedures)
+
+    @principals  = User.all(:select => :id, :conditions => {:boss => true}).map(&:id)
+    @principals += User.project_manager(@sneak_poll.project).map(&:id) if User.respond_to?(:project_manager)
+    @principal_stats = @sneak_poll.votes.by_principals(@principals).select_stats.all(:include => :user).group_by(&:user)
+    @coworker_stats = @sneak_poll.votes.not_by_principals(@principals).select_stats.all(:include => :user).group_by(&:user)
+    @users = (@principal_stats.keys + @coworker_stats.keys).uniq
+  end
+
   def new
     @sneak_poll = @project.sneak_polls.build(params[:sneak_poll])
 

@@ -1,8 +1,10 @@
 class SneakPollVote < ActiveRecord::Base
   unloadable
 
-  GRADES_RANGE = -2..2
-  
+  GRADES_RANGE      = -2..2
+  GRADE_COLUMNS     = [:timeliness, :quality, :commitment, :office_procedures]
+  COLUMNS_FOR_STATS = GRADE_COLUMNS.map{ |column| "AVG(#{quoted_table_name}.#{column}) AS average_#{column}" }.join(', ')
+
   belongs_to :poll, :class_name => 'SneakPoll', :counter_cache => :votes_count
   belongs_to :voter, :class_name => 'User', :inverse_of => :sneak_poll_votings
   belongs_to :user, :inverse_of => :sneak_poll_votes
@@ -16,34 +18,28 @@ class SneakPollVote < ActiveRecord::Base
   validates_uniqueness_of :poll_id, :scope => [:voter_id, :user_id]
   validate                :voter_must_not_be_user
 
-  [:timeliness, :quality, :commitment, :office_procedures].each do |column|
+  GRADE_COLUMNS.each do |column|
     validates_inclusion_of column, :in => GRADES_RANGE, :allow_nil => true
     validates_length_of    "#{column}_notes", :in => 1..255, :allow_blank => true
     validates_presence_of  "#{column}_notes", :allow_blank => false, :if => Proc.new{ |vote| vote[column] == GRADES_RANGE.first || vote[column] == GRADES_RANGE.last }
   end
 
-  named_scope :by_poll,       lambda {|poll|    {:conditions => {:poll_id => poll}}}
-  named_scope :by_project,    lambda {|project| {:joins => :poll, :conditions => {:sneak_polls => {:project_id => project}}}}
-  named_scope :by_voter,      lambda {|user|    {:conditions => {:voter_id => user}}}
-  named_scope :not_by_voter,  lambda {|user|    {:conditions => ["#{quoted_table_name}.voter_id NOT IN (?)", user]}}
-  named_scope :by_user,       lambda {|voter|   {:conditions => {:user_id  => voter}}}
-  named_scope :exclude_voter, lambda {|voter|   {:conditions => ["#{quoted_table_name}.voter_id <> ?", voter]}}
-  named_scope :exclude_user,  lambda {|user|    {:conditions => ["#{quoted_table_name}.user_id <> ?",  user]}}
-  named_scope :blank,         :conditions => ["#{quoted_table_name}.timeliness IS NULL AND (#{quoted_table_name}.timeliness_notes IS NULL OR #{quoted_table_name}.timeliness_notes = '')" +
-                                                  " AND #{quoted_table_name}.quality IS NULL AND (#{quoted_table_name}.quality_notes IS NULL OR #{quoted_table_name}.quality_notes = '')" +
-                                                  " AND #{quoted_table_name}.commitment IS NULL AND (#{quoted_table_name}.commitment_notes IS NULL OR #{quoted_table_name}.commitment_notes = '')" +
-                                                  " AND #{quoted_table_name}.office_procedures IS NULL AND (#{quoted_table_name}.office_procedures_notes IS NULL OR #{quoted_table_name}.office_procedures_notes = '')" +
-                                                  " AND (#{quoted_table_name}.notes IS NULL OR #{quoted_table_name}.notes = '')"]
-  named_scope :unblank,       :conditions => ["#{quoted_table_name}.timeliness IS NOT NULL OR (#{quoted_table_name}.timeliness_notes IS NOT NULL AND #{quoted_table_name}.timeliness_notes <> '')" +
-                                                  " OR #{quoted_table_name}.quality IS NOT NULL OR (#{quoted_table_name}.quality_notes IS NOT NULL AND #{quoted_table_name}.quality_notes <> '')" +
-                                                  " OR #{quoted_table_name}.commitment IS NOT NULL OR (#{quoted_table_name}.commitment_notes IS NOT NULL AND #{quoted_table_name}.commitment_notes <> '')" +
-                                                  " OR #{quoted_table_name}.office_procedures IS NOT NULL OR (#{quoted_table_name}.office_procedures_notes IS NOT NULL AND #{quoted_table_name}.office_procedures_notes <> '')" +
-                                                  " OR (#{quoted_table_name}.notes IS NOT NULL AND #{quoted_table_name}.notes <> '')"]
-  named_scope :by_master,     lambda{ {
-      :joins      => [:user, :voter, {:poll => {:project => {:memberships => :member_roles}}}],
-      :conditions => ['(voters_sneak_poll_votes.boss = ?) OR (voters_sneak_poll_votes.id = users.master_id) OR (voter_id = members.user_id AND member_roles.role_id = ?)', true, Role::PROJECT_MANAGER_ID],
-      :group      => 'sneak_poll_votes.id'
-  } }
+  named_scope :by_poll,       lambda{ |poll|    {:conditions => {:poll_id => poll}} }
+  named_scope :by_project,    lambda{ |project| {:joins => :poll, :conditions => {:sneak_polls => {:project_id => project}}} }
+  named_scope :by_voter,      lambda{ |user|    {:conditions => {:voter_id => user}} }
+  named_scope :not_by_voter,  lambda{ |user|    {:conditions => ["#{quoted_table_name}.voter_id NOT IN (?)", user]} unless user.blank? } # See http://stackoverflow.com/questions/129077/sql-not-in-constraint-and-null-values
+  named_scope :by_user,       lambda{ |voter|   {:conditions => {:user_id  => voter}} }
+  named_scope :exclude_voter, lambda{ |voter|   {:conditions => ["#{quoted_table_name}.voter_id <> ?", voter]} }
+  named_scope :exclude_user,  lambda{ |user|    {:conditions => ["#{quoted_table_name}.user_id <> ?",  user]} }
+  named_scope :blank,         :conditions => GRADE_COLUMNS.
+      map{ |column| "#{quoted_table_name}.#{column} IS NULL AND (#{quoted_table_name}.#{column}_notes IS NULL OR #{quoted_table_name}.#{column}_notes = '')" }.join(' AND ') +
+      " AND (#{quoted_table_name}.notes IS NULL OR #{quoted_table_name}.notes = '')"
+  named_scope :unblank,       :conditions => GRADE_COLUMNS.
+      map{ |column| "#{quoted_table_name}.#{column} IS NOT NULL OR (#{quoted_table_name}.#{column}_notes IS NOT NULL AND #{quoted_table_name}.#{column}_notes <> '')" }.join(' OR ') +
+      " OR (#{quoted_table_name}.notes IS NOT NULL AND #{quoted_table_name}.notes <> '')"
+  named_scope :select_stats,      :select => "#{quoted_table_name}.user_id, #{COLUMNS_FOR_STATS}", :group => :user_id
+  named_scope :by_principals,     lambda{ |principals| {:joins => :user, :conditions => ["(#{quoted_table_name}.voter_id IN (?)) OR (#{quoted_table_name}.voter_id = users.master_id)", principals]}}
+  named_scope :not_by_principals, lambda{ |principals| {:joins => :user, :conditions => ["(#{quoted_table_name}.voter_id NOT IN (?)) AND (#{quoted_table_name}.voter_id <> COALESCE(users.master_id, -1))", principals]}}
 
   def self.unique(sneak_poll, voter, attributes_or_user)
     if attributes_or_user.is_a?(Hash)

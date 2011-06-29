@@ -17,6 +17,7 @@ en:
   label_sneak_poll_average: Average
   label_sneak_poll_average_average: Average of averages
   button_sneak_poll_vote: Vote
+  button_stats: Statistics
   text_sneak_poll_added_title: New Poll %{sneak_poll} has been added to project %{project}.
   text_sneak_poll_added_body: We encourage you to vote for your favorite workmate!
   text_sneak_poll_voted: Successfully voted on %{sneak_poll} Poll.

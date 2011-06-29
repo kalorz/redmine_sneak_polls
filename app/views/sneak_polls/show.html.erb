@@ -4,13 +4,15 @@
 
 <%- html_title t(:label_sneak_poll_title, :title => @sneak_poll.title) -%>
 
-<%- if can_manage? -%>
-    <div class="contextual">
+<div class="contextual">
+    <%= link_to t(:button_stats), {:action => 'stats'}, :class => 'icon icon-stats' -%>
+    <%- if can_manage? -%>
+        |
         <%= link_to t(:button_edit), {:action => 'edit'}, :class => 'icon icon-edit' -%>
         |
         <%= link_to l(:button_delete), {:controller => 'sneak_polls', :action => 'destroy', :project_id => @project, :id => @sneak_poll}, :confirm => l(:text_are_you_sure), :method => :post, :class => 'icon icon-del', :title => l(:button_delete) -%>
-    </div>
-<%- end -%>
+    <%- end -%>
+</div>
 
 <h2><%= t(:label_sneak_poll_title, :title => @sneak_poll.title) -%></h2>
 

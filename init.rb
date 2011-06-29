@@ -21,7 +21,7 @@ Redmine::Plugin.register :redmine_sneak_polls do
   author_url  'https://github.com/sodercober'
 
   project_module :sneak_polls do
-    permission :view_sneak_polls,   {:sneak_polls => [:show, :index]}, :public => true, :require => :loggedin
+    permission :view_sneak_polls,   {:sneak_polls => [:show, :stats, :index]}, :public => true, :require => :loggedin
     permission :manage_sneak_polls, {:sneak_polls => [:new, :edit, :destroy]}
     permission :vote_sneak_polls,   {:sneak_polls => [:vote]}, :require => :member
   end
