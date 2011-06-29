@@ -69,9 +69,9 @@ class SneakPollVote < ActiveRecord::Base
 
   def self.all_unique_from_params(sneak_poll, voter, params)
     if params.is_a?(Hash)
-      params.map{|key, attributes| SneakPollVote.unique(sneak_poll, voter, attributes)}
+      params.map{ |key, attributes| SneakPollVote.unique(sneak_poll, voter, attributes) }
     elsif params.is_a?(Array)
-      params.map{|attributes| SneakPollVote.unique(sneak_poll, voter, attributes)}
+      params.map{ |attributes| SneakPollVote.unique(sneak_poll, voter, attributes) }
     else
       [SneakPollVote.unique(sneak_poll, voter, params)]
     end
