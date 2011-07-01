@@ -6,8 +6,8 @@ class SneakPollVote < ActiveRecord::Base
   COLUMNS_FOR_STATS = GRADE_COLUMNS.map{ |column| "AVG(#{column}) AS average_#{column}" }.join(', ')
 
   belongs_to :poll, :class_name => 'SneakPoll', :counter_cache => :votes_count
-  belongs_to :voter, :class_name => 'User', :inverse_of => :sneak_poll_votings
-  belongs_to :user, :inverse_of => :sneak_poll_votes
+  belongs_to :voter, :class_name => 'User'
+  belongs_to :user
 
   attr_accessible :timeliness, :timeliness_notes, :quality, :quality_notes,
                   :commitment, :commitment_notes, :office_procedures, :office_procedures_notes,
