@@ -25,11 +25,11 @@ table.sneak_polls tfoot tr.summary .label { font-weight: bold; text-align: right
 table.sneak_polls .title { text-align: left; white-space: normal; width: 100%; }
 table.sneak_polls .int,
 table.sneak_polls .float { text-align: right; padding-left: 2em; }
-table.sneak_polls .left { text-align: left; padding-right: 2em; padding-left: 2px; }
+table.sneak_polls .left { text-align: left; padding-right: 2em; padding-left: 0px; }
 table.sneak_polls .grade_by_principals { border-left: 1px dotted #E4E4E4; }
 table.sneak_polls.tight .int,
 table.sneak_polls.tight .float { padding-left: 0.5em; }
-table.sneak_polls.tight .left { padding-right: 0.5em; }
+table.sneak_polls.tight .left { padding-left: 0px; padding-right: 0.5em; }
 
 .grade-nan { color: #ccc; }
 .normalized-grade-0 { color: #900; }
