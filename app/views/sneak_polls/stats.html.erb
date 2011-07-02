@@ -5,7 +5,7 @@
 <% html_title t(:label_sneak_poll_title, :title => @sneak_poll.title) %>
 
 <div class="contextual">
-    <%= link_to t(:button_sneak_poll_vote), {:action => 'show'}, :class => 'icon icon-report' -%>
+    <%= link_to t(:button_sneak_poll_vote), {:action => 'show'}, :class => 'icon icon-fav' -%>
     <%- if can_manage? -%>
         |
         <%= link_to t(:button_edit), {:action => 'edit'}, :class => 'icon icon-edit' -%>

@@ -65,7 +65,7 @@
         </div>
         <div style="clear: both;"></div>
         <%- if can_vote? -%>
-            <%= submit_tag t(:button_sneak_poll_vote) -%>
+            <div class="buttons"><button type="submit"><span class="icon icon-fav"><%= t(:button_sneak_poll_vote) %></span></button></div>
         <%- end -%>
     <%- end -%>
 <%- else -%>

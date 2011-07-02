@@ -6,6 +6,8 @@
 .controller-sneak_polls .tabular label.invalid { color: #900; }
 .controller-sneak_polls span.radio { margin-right: 1.5em; white-space: nowrap; }
 .controller-sneak_polls span.radio label:hover, .controller-sneak_polls span.radio input:hover { cursor: pointer; }
+.controller-sneak_polls .buttons { text-align: center; }
+.controller-sneak_polls .buttons button { padding: 0.5em 1em; }
 .controller-sneak_polls #content .tabs { height: auto !important; overflow-x: visible !important; overflow-y: visible !important; }
 .controller-sneak_polls #content .tabs ul { position: relative !important; display: block !important; width: auto !important; }
 .controller-sneak_polls #content .tabs ul li { float: none !important; }
