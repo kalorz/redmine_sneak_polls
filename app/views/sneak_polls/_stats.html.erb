@@ -4,22 +4,22 @@
             <tr>
                 <%= sort_header_tag 'name', :caption => l(:field_name) %>
                 <% SneakPollVote::GRADE_COLUMNS.each do |column| %>
-                    <%= sort_header_tag "average_#{column}", :caption => abbr_tag(:"field_#{column}"), :colspan => 2 %>
+                    <th colspan="2"><%= abbr_tag(:"field_#{column}") %></th>
                 <% end %>
             </tr>
         </thead>
         <tbody>
             <% stats.each do |stat| %>
-                <tr class="sneak_poll <%= cycle('even', 'odd') %>" id="<%= dom_id(stat) %>">
+                <tr class="sneak_poll <%= cycle('even', 'odd') %>">
                     <td class="string title"><%= link_to_user(stat.user) %></td>
-                    <% SneakPollVote::GRADE_COLUMNS.each do |column| %>
+                    <% SneakPollVote::GRADE_COLUMNS.each_with_index do |column, idx| %>
                         <% principal_grade = stat["average_#{column}_by_principals"] %>
                         <% coworker_grade  = stat["average_#{column}_by_coworkers"] %>
-                        <td class="float">
+                        <td class="float grade_by_principals">
                             <span class="<%= SneakPoll.grade_css_classes(principal_grade) %>"><%= format_grade(principal_grade) %></span>
                             /
                         </td>
-                        <td class="float left">
+                        <td class="float grade_by_coworkers left">
                             <span class="<%= SneakPoll.grade_css_classes(coworker_grade) %>"><%= format_grade(coworker_grade) %></span>
                         </td>
                     <% end %>

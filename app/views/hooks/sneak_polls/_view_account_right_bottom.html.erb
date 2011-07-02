@@ -20,11 +20,11 @@
                     <% SneakPollVote::GRADE_COLUMNS.each do |column| %>
                         <% principal_grade = stat["average_#{column}_by_principals"] %>
                         <% coworker_grade  = stat["average_#{column}_by_coworkers"] %>
-                        <td class="float">
+                        <td class="float grade_by_principals">
                             <span class="<%= SneakPoll.grade_css_classes(principal_grade) %>"><%= format_grade(principal_grade) %></span>
                             /
                         </td>
-                        <td class="float left">
+                        <td class="float grade_by_coworkers left">
                             <span class="<%= SneakPoll.grade_css_classes(coworker_grade) %>"><%= format_grade(coworker_grade) %></span>
                         </td>
                     <% end %>
@@ -57,11 +57,11 @@
                     <% SneakPollVote::GRADE_COLUMNS.each do |column| %>
                         <% principal_grade = stat["average_#{column}_by_principals"] %>
                         <% coworker_grade  = stat["average_#{column}_by_coworkers"] %>
-                        <td class="float">
+                        <td class="float grade_by_principals">
                             <span class="<%= SneakPoll.grade_css_classes(principal_grade) %>"><%= format_grade(principal_grade) %></span>
                             /
                         </td>
-                        <td class="float left">
+                        <td class="float grade_by_coworkers left">
                             <span class="<%= SneakPoll.grade_css_classes(coworker_grade) %>"><%= format_grade(coworker_grade) %></span>
                         </td>
                     <% end %>
