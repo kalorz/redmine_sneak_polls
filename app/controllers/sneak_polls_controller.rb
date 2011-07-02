@@ -15,9 +15,7 @@ class SneakPollsController < ApplicationController
 
     sort_collection!(@sneak_polls)
 
-    @principal_stats = SneakPollVote.by_project(@project).by_principals.select_stats.all(:include => :user).group_by(&:user)
-    @coworker_stats = SneakPollVote.by_project(@project).exclude_principals.select_stats.all(:include => :user).group_by(&:user)
-    @users = (@principal_stats.keys + @coworker_stats.keys).uniq.sort_by(&:name)
+    @user_stats = SneakPollVote.by_project(@project).select_split_user_stats.all(:include => :user, :order => 'users.firstname, users.lastname, users.login')
 
     respond_to do |format|
       format.html
@@ -35,11 +33,7 @@ class SneakPollsController < ApplicationController
     sort_init 'name'
     sort_update %w(name)
 
-    @principal_stats = @sneak_poll.votes.by_principals.select_stats.all(:include => :user).group_by(&:user)
-    @coworker_stats = @sneak_poll.votes.exclude_principals.select_stats.all(:include => :user).group_by(&:user)
-    @users = (@principal_stats.keys + @coworker_stats.keys).uniq
-
-    sort_collection!(@users)
+    @user_stats = @sneak_poll.votes.select_split_user_stats.all(:include => :user, :order => 'users.firstname, users.lastname, users.login')
   end
 
   def new

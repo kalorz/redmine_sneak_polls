@@ -1,4 +1,4 @@
-<% unless users.blank? %>
+<% unless stats.blank? %>
     <table class="list sneak_polls">
         <thead>
             <tr>
@@ -9,12 +9,12 @@
             </tr>
         </thead>
         <tbody>
-            <% users.each do |user| %>
-                <tr class="sneak_poll <%= cycle('even', 'odd') %>" id="<%= dom_id(user) %>">
-                    <td class="string title"><%= link_to_user(user) %></td>
+            <% stats.each do |stat| %>
+                <tr class="sneak_poll <%= cycle('even', 'odd') %>" id="<%= dom_id(stat) %>">
+                    <td class="string title"><%= link_to_user(stat.user) %></td>
                     <% SneakPollVote::GRADE_COLUMNS.each do |column| %>
-                        <% principal_grade = principal_stats[user] && principal_stats[user].first.send("average_#{column}") %>
-                        <% coworker_grade  = coworker_stats[user]  && coworker_stats[user].first.send("average_#{column}") %>
+                        <% principal_grade = stat["average_#{column}_by_principals"] %>
+                        <% coworker_grade  = stat["average_#{column}_by_coworkers"] %>
                         <td class="float">
                             <span class="<%= SneakPoll.grade_css_classes(principal_grade) %>"><%= format_grade(principal_grade) %></span>
                             /

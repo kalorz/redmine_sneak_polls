@@ -1,9 +1,12 @@
 class SneakPollVote < ActiveRecord::Base
   unloadable
 
-  GRADES_RANGE      = -2..2
-  GRADE_COLUMNS     = [:timeliness, :quality, :commitment, :office_procedures, :grade1, :grade2]
-  COLUMNS_FOR_STATS = GRADE_COLUMNS.map{ |column| "AVG(#{column}) AS average_#{column}" }.join(', ')
+  GRADES_RANGE              = -2..2
+  GRADE_COLUMNS             = [:timeliness, :quality, :commitment, :office_procedures, :grade1, :grade2]
+  COLUMNS_FOR_STATS         = GRADE_COLUMNS.map{ |column| "AVG(#{column}) AS average_#{column}" }.join(', ')
+  JOIN_FOR_SPLIT_STATS      = Project.supports_fixed_manager ? [:user, :voter, {:poll => :project}] : [:user, :voter]
+  CONDITION_FOR_SPLIT_STATS = Project.supports_fixed_manager ? '(voter_id = COALESCE(users.master_id, -1)) OR (voters_sneak_poll_votes.boss) OR (voter_id = COALESCE(projects.fixed_manager_id, -1))' : '(voter_id = COALESCE(users.master_id, -1)) OR (voters_sneak_poll_votes.boss)'
+  COLUMNS_FOR_SPLIT_STATS   = GRADE_COLUMNS.map{ |column| "AVG(CASE WHEN #{CONDITION_FOR_SPLIT_STATS} THEN #{column} END) AS average_#{column}_by_principals, AVG(CASE WHEN NOT (#{CONDITION_FOR_SPLIT_STATS}) THEN #{column} END) AS average_#{column}_by_coworkers" }.join(', ')
 
   belongs_to :poll, :class_name => 'SneakPoll', :counter_cache => :votes_count
   belongs_to :voter, :class_name => 'User'
@@ -39,20 +42,17 @@ class SneakPollVote < ActiveRecord::Base
                   " OR (notes IS NOT NULL AND notes <> '')"
   named_scope :select_stats,  :select => "user_id, #{COLUMNS_FOR_STATS}", :group => :user_id
   named_scope :select_poll_stats, :select => "poll_id, #{COLUMNS_FOR_STATS}", :group => :poll_id
-  named_scope :by_principals, Project.supports_fixed_manager ? {
-      :joins => [:user, :voter, {:poll => :project}],
-      :conditions => '(voter_id = COALESCE(users.master_id, -1)) OR (voters_sneak_poll_votes.boss) OR (voter_id = COALESCE(projects.fixed_manager_id, -1))'
-  } : {
-      :joins => [:user, :voter],
-      :conditions => '(voter_id = COALESCE(users.master_id, -1)) OR (voters_sneak_poll_votes.boss)'
-  }
-  named_scope :exclude_principals, Project.supports_fixed_manager ? {
-      :joins => [:user, :voter, {:poll => :project}],
-      :conditions => '(voter_id <> COALESCE(users.master_id, -1)) AND (NOT voters_sneak_poll_votes.boss) AND (voter_id <> COALESCE(projects.fixed_manager_id, -1))'
-  } : {
-      :joins => [:user, :voter],
-      :conditions => '(voter_id <> COALESCE(users.master_id, -1)) AND (NOT voters_sneak_poll_votes.boss)'
-  }
+
+  named_scope :select_split_poll_stats, :select => "poll_id, #{COLUMNS_FOR_SPLIT_STATS}", :joins  => JOIN_FOR_SPLIT_STATS, :group  => :poll_id
+  named_scope :select_split_user_stats, :select => "user_id, #{COLUMNS_FOR_SPLIT_STATS}", :group => :user_id, :joins => JOIN_FOR_SPLIT_STATS
+  named_scope :select_split_quarterly_stats,
+              :select => "EXTRACT(YEAR FROM sneak_polls.created_at) AS year, FLOOR((EXTRACT(MONTH FROM sneak_polls.created_at) - 1) / 3 + 1) AS quarter, #{COLUMNS_FOR_SPLIT_STATS}",
+              :joins  => JOIN_FOR_SPLIT_STATS,
+              :group  => 'year, quarter',
+              :order  => 'year, quarter'
+
+  named_scope :by_principals,      :joins => JOIN_FOR_SPLIT_STATS, :conditions => CONDITION_FOR_SPLIT_STATS
+  named_scope :exclude_principals, :joins => JOIN_FOR_SPLIT_STATS, :conditions => "NOT (#{CONDITION_FOR_SPLIT_STATS})"
 
   def self.unique(sneak_poll, voter, attributes_or_user)
     if attributes_or_user.is_a?(Hash)

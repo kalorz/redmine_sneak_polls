@@ -65,4 +65,4 @@
 
 <h3><%= t(:label_sneak_polls_user_stats_per_project) %></h3>
 
-<%= render :partial => 'stats', :locals => {:users => @users, :principal_stats => @principal_stats, :coworker_stats => @coworker_stats} %>
+<%= render :partial => 'stats', :locals => {:stats => @user_stats} %>

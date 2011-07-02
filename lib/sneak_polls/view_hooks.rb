@@ -8,13 +8,12 @@ module SneakPolls
     end
 
     def view_account_right_bottom(context = {})
-      principal_stats = SneakPollVote.by_user(context[:user]).by_principals.select_poll_stats.all(:include => {:poll => :project}).group_by(&:poll)
-      coworker_stats  = SneakPollVote.by_user(context[:user]).exclude_principals.select_poll_stats.all(:include => {:poll => :project}).group_by(&:poll)
-      poll_stats      = (principal_stats.keys + coworker_stats.keys).uniq.sort_by(&:created_at).reverse
+      stats = SneakPollVote.by_user(context[:user]).select_split_poll_stats.all(:include => {:poll => :project})
+      quarterly_stats = SneakPollVote.by_user(context[:user]).select_split_quarterly_stats.all
 
       context[:controller].send(:render_to_string, {
           :partial => 'hooks/sneak_polls/view_account_right_bottom',
-          :locals  => context.merge({:poll_stats => poll_stats, :principal_stats => principal_stats, :coworker_stats => coworker_stats})
+          :locals  => context.merge({:stats => stats, :quarterly_stats => quarterly_stats})
       })
     end
 

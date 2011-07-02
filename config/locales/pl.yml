@@ -22,6 +22,7 @@ pl:
   label_sneak_polls_user_stats_per_project: Statystyki użytkowników w projekcie
   label_sneak_polls_user_stats_per_poll: Statystyki użytkowników w ankiecie
   label_sneak_polls_poll_stats_per_user: Statystyki użytkownika w ankietach
+  label_sneak_polls_poll_quarterly_stats_per_user: Kwartalne statystyki użytkownika
   button_sneak_poll_vote: Zagłosuj
   button_stats: Statystyki
   text_sneak_poll_added_title: Dodano nową ankietę %{sneak_poll} do projektu %{project}.
@@ -61,6 +62,8 @@ pl:
   field_boss: Szef szefów
   field_master: Pryncypał
   field_master_id: Pryncypał
+  field_year: Rok
+  field_quarter: Kwartał
   activerecord:
     models:
       sneak_poll: Ankieta

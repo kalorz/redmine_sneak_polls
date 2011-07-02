@@ -22,6 +22,7 @@ en:
   label_sneak_polls_user_stats_per_project: User statistics per project
   label_sneak_polls_user_stats_per_poll: User statistics per poll
   label_sneak_polls_poll_stats_per_user: User statistics in polls
+  label_sneak_polls_poll_quarterly_stats_per_user: Quarterly user statistics
   button_sneak_poll_vote: Vote
   button_stats: Statistics
   text_sneak_poll_added_title: New Poll %{sneak_poll} has been added to project %{project}.
@@ -61,6 +62,8 @@ en:
   field_boss: Main Boss
   field_master: Principal
   field_master_id: Principal
+  field_year: Year
+  field_quarter: Quarter
   activerecord:
     models:
       sneak_poll: Poll
