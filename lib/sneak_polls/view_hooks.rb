@@ -8,8 +8,8 @@ module SneakPolls
     end
 
     def view_account_right_bottom(context = {})
-      principal_stats = SneakPollVote.by_user(context[:user]).by_principals.select_poll_stats.all(:include => :poll).group_by(&:poll)
-      coworker_stats  = SneakPollVote.by_user(context[:user]).exclude_principals.select_poll_stats.all(:include => :poll).group_by(&:poll)
+      principal_stats = SneakPollVote.by_user(context[:user]).by_principals.select_poll_stats.all(:include => {:poll => :project}).group_by(&:poll)
+      coworker_stats  = SneakPollVote.by_user(context[:user]).exclude_principals.select_poll_stats.all(:include => {:poll => :project}).group_by(&:poll)
       poll_stats      = (principal_stats.keys + coworker_stats.keys).uniq.sort_by(&:created_at).reverse
 
       context[:controller].send(:render_to_string, {

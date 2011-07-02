@@ -13,7 +13,10 @@
         <tbody>
             <% poll_stats.each do |poll_stat| %>
                 <tr class="sneak_poll <%= cycle('even', 'odd') %>" id="<%= dom_id(poll_stat) %>">
-                    <td class="string title"><%= link_to(poll_stat.title, :controller => :sneak_polls, :action => :show, :project_id => poll_stat.project_id, :id => poll_stat) %></td>
+                    <td class="string title">
+                        <%= link_to(poll_stat.title, :controller => :sneak_polls, :action => :show, :project_id => poll_stat.project, :id => poll_stat) %>
+                        (<%= link_to(poll_stat.project.name, :controller => :sneak_polls, :action => :index, :project_id => poll_stat.project) %>)
+                    </td>
                     <% SneakPollVote::GRADE_COLUMNS.each do |column| %>
                         <% principal_grade = principal_stats[poll_stat] && principal_stats[poll_stat].first.send("average_#{column}") %>
                         <% coworker_grade  = coworker_stats[poll_stat]  && coworker_stats[poll_stat].first.send("average_#{column}") %>
