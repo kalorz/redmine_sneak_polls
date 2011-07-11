@@ -7,19 +7,17 @@ Dispatcher.to_prepare do
   require_dependency 'user'
   require_dependency 'project'
   require_dependency 'mailer'
-  require_dependency 'application_helper'
 
-  User.send              :include, SneakPolls::UserPatch
-  Project.send           :include, SneakPolls::ProjectPatch
-  Mailer.send            :include, SneakPolls::MailerPatch
-  ApplicationHelper.send :include, SneakPolls::ApplicationHelperPatch
+  User.send    :include, SneakPolls::UserPatch
+  Project.send :include, SneakPolls::ProjectPatch
+  Mailer.send  :include, SneakPolls::MailerPatch
 end
 
 Redmine::Plugin.register :redmine_sneak_polls do
   name        'Sneak Polls'
   author      'Karol Sarnacki'
   description 'Plugin for informing on colleagues'
-  version     '0.0.5'
+  version     '0.0.6'
   url         'https://github.com/sodercober/redmine_sneak_polls'
   author_url  'https://github.com/sodercober'
 
