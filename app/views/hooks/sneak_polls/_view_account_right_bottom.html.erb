@@ -15,7 +15,7 @@
                         <%= link_to(stat.poll.title, :controller => :sneak_polls, :action => :show, :project_id => stat.poll.project, :id => stat.poll) %>
                         (<%= link_to_unless(stat.poll.project.archived?, stat.poll.project.name, :controller => :sneak_polls, :action => :index, :project_id => stat.poll.project) %>)
                     </td>
-                    <%= sneak_poll_columns(stat, stats_by_principals[stat.poll_id]) %>
+                    <%= sneak_poll_columns(stat, stats_by_principals.select{|s| s.poll_id == stat.poll_id}) %>
                 </tr>
             <% end %>
         </tbody>

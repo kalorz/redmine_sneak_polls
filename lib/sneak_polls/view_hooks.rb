@@ -9,13 +9,12 @@ module SneakPolls
 
     def view_account_right_bottom(context = {})
       stats = SneakPollVote.by_user(context[:user]).select_split_poll_stats.all(:include => {:poll => :project})
-      stats_by_principals = SneakPollVote.by_user(context[:user]).select_stats.all(
+      stats_by_principals = SneakPollVote.by_user(context[:user]).all(
           :joins      => SneakPollVote::JOIN_FOR_SPLIT_STATS,
           :conditions => SneakPollVote::CONDITION_FOR_SPLIT_STATS,
-          :group      => 'user_id, voter_id, poll_id',
-          :select     => "poll_id, user_id, voter_id, #{SneakPollVote::GRADE_COLUMNS.join(',')}",
+          :select     => "poll_id, user_id, voter_id, #{SneakPollVote::GRADE_COLUMNS.join(',')}, #{SneakPollVote::GRADE_COLUMNS.map{|c| "#{c}_notes"}.join(',')}, notes",
           :include    => :voter
-      ).group_by(&:poll_id)
+      )
       quarterly_stats = SneakPollVote.by_user(context[:user]).select_split_quarterly_stats.all
 
       context[:controller].send(:render_to_string, {
