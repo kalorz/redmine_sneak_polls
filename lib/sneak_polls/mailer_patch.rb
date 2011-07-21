@@ -15,11 +15,12 @@ module SneakPolls
     module InstanceMethods
 
       def sneak_poll_add(sneak_poll)
+        @author = User.anonymous
         redmine_headers 'Project'       => sneak_poll.project.identifier,
                         'Sneak-Poll-Id' => sneak_poll.id
         message_id sneak_poll
         recipients sneak_poll.recipients
-        cc(sneak_poll.project.recipients - @recipients)
+        cc sneak_poll.project.recipients - [*@recipients]
         subject "[#{sneak_poll.project.name} - Nowa ankieta \"#{sneak_poll.title}\""
         body :sneak_poll     => sneak_poll,
              :sneak_poll_url => url_for(:controller => 'sneak_polls', :action => 'show', :project_id => sneak_poll.project, :id => sneak_poll),

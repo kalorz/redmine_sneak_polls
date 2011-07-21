@@ -29,7 +29,7 @@ class SneakPoll < ActiveRecord::Base
   # Returns the mail adresses of users that should be notified
   def recipients
     # project.users.select{|u| u.active? && u.notify_about?(self)}.uniq.map(&:mail)
-    project.users.select(&:active?).map(&:mail).compact.uniq
+    project.users.active.map(&:mail).compact.uniq
   end
 
   def average_timeliness

@@ -18,12 +18,20 @@ module ApplicationHelper
     end.join
   end
 
-  def sneak_poll_columns(stat)
+  def sneak_poll_columns(stat, stat_by_principals = nil)
     SneakPollVote::GRADE_COLUMNS.map do |column|
       principal_grade = stat["average_#{column}_by_principals"]
       coworker_grade  = stat["average_#{column}_by_coworkers"]
 
-      content_tag(:td, :class => 'float grade_by_principals') do
+      if stat_by_principals
+        title = stat_by_principals.map do |x|
+          "#{x.voter.name}: #{format_grade(x[column])}"
+        end.join("\n")
+      else
+        title = ''
+      end
+
+      content_tag(:td, :class => 'float grade_by_principals', :title => title) do
         content_tag(:span, format_grade(principal_grade), :class => SneakPoll.grade_css_classes(principal_grade)) + ' / '
       end +
           content_tag(:td, :class => 'float grade_by_coworkers left') do
