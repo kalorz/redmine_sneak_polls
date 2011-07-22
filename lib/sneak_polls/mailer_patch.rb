@@ -21,7 +21,7 @@ module SneakPolls
         message_id sneak_poll
         recipients sneak_poll.recipients
         cc sneak_poll.project.recipients - [*@recipients]
-        subject "[#{sneak_poll.project.name} - Nowa ankieta \"#{sneak_poll.title}\""
+        subject "[#{sneak_poll.project.name}] Nowa ankieta: #{sneak_poll.title}"
         body :sneak_poll     => sneak_poll,
              :sneak_poll_url => url_for(:controller => 'sneak_polls', :action => 'show', :project_id => sneak_poll.project, :id => sneak_poll),
              :project        => sneak_poll.project,
